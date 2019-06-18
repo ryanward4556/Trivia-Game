@@ -36,7 +36,7 @@ var arrQuestions = [
         correctAns: "c"
     },
     {
-        question: "What is House Tyrell's sigil?.",
+        question: "What is House Tyrell's sigil?",
         answers: {
             a: "The Lion",
             b: "The Kracken",
@@ -47,31 +47,44 @@ var arrQuestions = [
     }
 ]
 
-function displayQuestions(arr) {
+function displayQuiz(arr) {
     var randomArr = shuffle(arr);
     var currentQuestion;
     var currentAnswers;
+    var newQuestion;
 
     for (var i = 0; i < randomArr.length; i++) {
+        newQuestion = $(".list-group").append("<li class='list-group-item'></li>")
         currentQuestion = randomArr[i].question;
-        console.log(currentQuestion);
-        currentAnswers = arr[i].answers;
+        displayQuestion(currentQuestion);
+
+        currentAnswers = randomArr[i].answers;
         var arrAnswers = [];
         arrAnswers.push(currentAnswers.a, currentAnswers.b, currentAnswers.c, currentAnswers.d);
         shuffle(arrAnswers);
+
+        console.log(currentQuestion);
         console.log(arrAnswers);
-        for (var j = 0; j < arrAnswers.length; j++) {
-            appendText(arrAnswers[j]);
-        }
+        //  TO ADD **** for each question make an html div with a class 'question 1', 
+        //  for each question in arrQuestions array (arrQuestions[i]), display the questions...
 
     }
-}
-displayQuestions(arrQuestions);
 
-function appendText(question) {
-    $(".form-check").append("<input class='form-check-inline' type='radio' name='options' value='option1'>", "<label class='form-check-label'></label>");
-    $(".form-check-label").html(question);
 }
+function displayQuestion(question) {
+    $(".list-group-item").each(function(){
+        $(this).text(question);
+    });
+}
+displayQuiz(arrQuestions);
+
+// function appendText(question) {
+//     // for (var i = 0; i < arr.length; i++) {
+//         var newQuestion = $(".list-group").append("<li class='list-group-item'></li>")
+//         newQuestion.text(question);
+//     // }
+
+// }
 
 
 //  Shuffles order of array items

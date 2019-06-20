@@ -3,18 +3,8 @@
 var ansCorrect = 0;
 var ansIncorrect = 0;
 var ansUnanswered = 0;
-var optionOneStr = "<input class='form-check-inline' type='radio' name='q-options' id='opt-1' value='option1'><label class='form-check-label' for='opt-1'></label>"
-
-//  Display Timer
-
-//  Display questions and answers (radio buttons)
-
-
-//  Track answers
-
 
 //  Object array for each question
-
 var arrQuestions = [
     {
         question: "At the beginning of the series, how many children do Ned and Catelyn Stark have?",
@@ -33,14 +23,30 @@ var arrQuestions = [
     }
 ]
 
+//  Shuffles order of array items
+function shuffle(arr) {
+    var ctr = arr.length, temp, index;
+    while (ctr > 0) {
+        index = Math.floor(Math.random() * ctr);
+        ctr--;
+        temp = arr[ctr];
+        arr[ctr] = arr[index];
+        arr[index] = temp;
+    }
+    return arr;
+}
+
+//  Displays questions as text and each question's choices as buttons
 function displayQuiz(arr) {
     var randomArr = shuffle(arr);
-
     for (var i = 0; i < randomArr.length; i++) {
         var question = arrQuestions[i].question;
         document.write(question);
-        var options = shuffle(arrQuestions[i].choices);
+        var options = arrQuestions[i].choices;
         document.body.appendChild(document.createElement("br"));
+
+        var correct = arrQuestions[i].correctAns;
+
         var name = "radio" + i;
         for (var opt in options) {
             var radioEle = document.createElement("input");
@@ -54,23 +60,36 @@ function displayQuiz(arr) {
             document.body.appendChild(document.createElement("br"));
         }
         document.body.appendChild(document.createElement("br"));
+        console.log(question);
+        console.log(options);
+        console.log(arrQuestions[i].correctAns);
     }
 
 }
+
+$(document).ready(function() {
+    var isChecked = $("#input[type=radio]").prop("checked");
+    var counter = 0;
+    if (isChecked === true) {
+        counter +=1;
+        console.log(counter)
+    }
+    
+})
+
+
+//  Display Timer
+
+
+//  Display questions and answers (radio buttons)
+
+
+//  Track answers
+function countScore() {
+
+}
+
 
 displayQuiz(arrQuestions);
 
-
-//  Shuffles order of array items
-function shuffle(arr) {
-    var ctr = arr.length, temp, index;
-    while (ctr > 0) {
-        index = Math.floor(Math.random() * ctr);
-        ctr--;
-        temp = arr[ctr];
-        arr[ctr] = arr[index];
-        arr[index] = temp;
-    }
-    return arr;
-}
 

@@ -3,6 +3,7 @@
 var ansCorrect = 0;
 var ansIncorrect = 0;
 var ansUnanswered = 0;
+var optionOneStr = "<input class='form-check-inline' type='radio' name='q-options' id='opt-1' value='option1'><label class='form-check-label' for='opt-1'></label>"
 
 //  Display Timer
 
@@ -17,74 +18,47 @@ var ansUnanswered = 0;
 var arrQuestions = [
     {
         question: "At the beginning of the series, how many children do Ned and Catelyn Stark have?",
-        answers: {
-            a: "7",
-            b: "6",
-            c: "5",
-            d: "4"
-        },
-        correctAns: "c"
+        choices: ["7", "6", "5", "4"],
+        correctAns: 2
     },
     {
         question: "Arya's dire wolf is named __________.",
-        answers: {
-            a: "Ghost",
-            b: "Needle",
-            c: "Nimerya",
-            d: "Shaggydog"
-        },
-        correctAns: "c"
+        choices: ["Ghost", "Needle", "Nimerya", "Shaggydog"],
+        correctAns: 2
     },
     {
         question: "What is House Tyrell's sigil?",
-        answers: {
-            a: "The Lion",
-            b: "The Kracken",
-            c: "The Rose",
-            d: "The Falcon"
-        },
-        correctAns: "c"
+        choices: ["The Lion", "The Kracken", "The Rose", "The Falcon"],
+        correctAns: 2
     }
 ]
 
 function displayQuiz(arr) {
     var randomArr = shuffle(arr);
-    var currentQuestion;
-    var currentAnswers;
-    var newQuestion;
 
     for (var i = 0; i < randomArr.length; i++) {
-        newQuestion = $(".list-group").append("<li class='list-group-item'></li>")
-        currentQuestion = randomArr[i].question;
-        displayQuestion(currentQuestion);
-
-        currentAnswers = randomArr[i].answers;
-        var arrAnswers = [];
-        arrAnswers.push(currentAnswers.a, currentAnswers.b, currentAnswers.c, currentAnswers.d);
-        shuffle(arrAnswers);
-
-        console.log(currentQuestion);
-        console.log(arrAnswers);
-        //  TO ADD **** for each question make an html div with a class 'question 1', 
-        //  for each question in arrQuestions array (arrQuestions[i]), display the questions...
-
+        var question = arrQuestions[i].question;
+        document.write(question);
+        var options = shuffle(arrQuestions[i].choices);
+        document.body.appendChild(document.createElement("br"));
+        var name = "radio" + i;
+        for (var opt in options) {
+            var radioEle = document.createElement("input");
+            radioEle.type = "radio";
+            radioEle.value = options[opt];
+            radioEle.name = name;
+            document.body.appendChild(radioEle);
+            var label = document.createElement("Label");
+            label.innerHTML = options[opt];
+            document.body.appendChild(label);
+            document.body.appendChild(document.createElement("br"));
+        }
+        document.body.appendChild(document.createElement("br"));
     }
 
 }
-function displayQuestion(question) {
-    $(".list-group-item").each(function(){
-        $(this).text(question);
-    });
-}
+
 displayQuiz(arrQuestions);
-
-// function appendText(question) {
-//     // for (var i = 0; i < arr.length; i++) {
-//         var newQuestion = $(".list-group").append("<li class='list-group-item'></li>")
-//         newQuestion.text(question);
-//     // }
-
-// }
 
 
 //  Shuffles order of array items

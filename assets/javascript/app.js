@@ -43,6 +43,7 @@ var arrQuestions = [
 ]
 
 
+var audio = new Audio("../images/got2.mp3");
 
 
 
@@ -65,7 +66,6 @@ function displayQuiz(arr) {
     // This code will run as soon as the page loads
     $(document).ready(function () {
 
-        var audio = new Audio("../images/got.mp3");
         // audio.createSound({
         //     id: 'mySound',
         //     url: '/path/to/an.mp3'

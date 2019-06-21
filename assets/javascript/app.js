@@ -3,8 +3,7 @@
 var ansCorrect = 0;
 var ansIncorrect = 0;
 var ansUnanswered = 0;
-var timeId = $("#time-display");
-
+var timeId = document.getElementById("time-display");
 var quizId = document.getElementById("quiz-display");
 var resultsId = document.getElementById("results-display");
 var submitBtn = document.getElementById("submit-button");
@@ -43,6 +42,44 @@ var arrQuestions = [
     }
 ]
 
+// This code will run as soon as the page loads
+$(document).ready(function () {
+
+    //  Variable that will hold our setInterval that runs the stopwatch
+    var intervalId;
+
+    // prevents the clock from being sped up unnecessarily
+    var clockRunning = false;
+    var time = 3;
+
+    function start() {
+        console.log(time);
+        // DONE: Use setInterval to start the count here and set the clock to running.
+        if (!clockRunning) {
+            intervalId = setInterval(count, 1000);
+            clockRunning = true;
+        } 
+    }
+
+    function count() {
+
+        // DONE: increment time by 1, remember we cant use "this" here.
+        time--;
+
+        // DONE: Use the variable we just created to show the converted time in the "display" div.
+        $(timeId).text("Time Remaining: " + time);
+
+        if (time === 0) {
+            clearInterval(intervalId);
+            clockRunning = false;
+
+        }
+
+    }
+    start();
+
+});
+
 //  Shuffles order of array items
 function shuffle(arr) {
     var ctr = arr.length, temp, index;
@@ -61,7 +98,6 @@ function displayQuiz(arr) {
 
     //  Randomizes arrQuestions
     var array = shuffle(arr);
-    console.log(array);
 
     //  Adds questions and choices as html elements
     function addQuestions(arr, quiz) {
@@ -138,35 +174,5 @@ function displayQuiz(arr) {
     }
 
 }
-
-
-
-// }
-
-// $(document).ready(function () {
-//     var isChecked = $("#input[type=radio]").prop("checked");
-//     var counter = 0;
-//     if (isChecked === true) {
-//         counter += 1;
-//         console.log(counter)
-//     }
-
-// })
-
-
-//  Display Timer
-
-
-//  Display questions and answers (radio buttons)
-
-
-//  Track answers
-// function countScore() {
-
-// }
-
-
-
 displayQuiz(arrQuestions, quizId, resultsId, submitBtn);
-
 

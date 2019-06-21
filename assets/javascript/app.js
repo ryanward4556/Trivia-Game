@@ -3,23 +3,43 @@
 var ansCorrect = 0;
 var ansIncorrect = 0;
 var ansUnanswered = 0;
+var timeId = $("#time-display");
+
+var quizId = document.getElementById("quiz-display");
+var resultsId = document.getElementById("results-display");
+var submitBtn = document.getElementById("submit-button");
 
 //  Object array for each question
 var arrQuestions = [
     {
         question: "At the beginning of the series, how many children do Ned and Catelyn Stark have?",
-        choices: ["7", "6", "5", "4"],
-        correctAns: 2
+        choices: {
+            a: "7",
+            b: "6",
+            c: "5",
+            d: "4"
+        },
+        correctAns: "c"
     },
     {
         question: "Arya's dire wolf is named __________.",
-        choices: ["Ghost", "Needle", "Nimerya", "Shaggydog"],
-        correctAns: 2
+        choices: {
+            a: "Ghost",
+            b: "Needle",
+            c: "Nimerya",
+            d: "Shaggydog"
+        },
+        correctAns: "c"
     },
     {
         question: "What is House Tyrell's sigil?",
-        choices: ["The Lion", "The Kracken", "The Rose", "The Falcon"],
-        correctAns: 2
+        choices: {
+            a: "The Lion",
+            b: "The Kracken",
+            c: "The Rose",
+            d: "The Falcon"
+        },
+        correctAns: "c"
     }
 ]
 
@@ -38,44 +58,100 @@ function shuffle(arr) {
 
 //  Displays questions as text and each question's choices as buttons
 function displayQuiz(arr) {
-    var randomArr = shuffle(arr);
-    for (var i = 0; i < randomArr.length; i++) {
-        var question = arrQuestions[i].question;
-        document.write(question);
-        var options = arrQuestions[i].choices;
-        document.body.appendChild(document.createElement("br"));
 
-        var correct = arrQuestions[i].correctAns;
+    //  Randomizes arrQuestions
+    var array = shuffle(arr);
+    console.log(array);
 
-        var name = "radio" + i;
-        for (var opt in options) {
-            var radioEle = document.createElement("input");
-            radioEle.type = "radio";
-            radioEle.value = options[opt];
-            radioEle.name = name;
-            document.body.appendChild(radioEle);
-            var label = document.createElement("Label");
-            label.innerHTML = options[opt];
-            document.body.appendChild(label);
-            document.body.appendChild(document.createElement("br"));
+    //  Adds questions and choices as html elements
+    function addQuestions(arr, quiz) {
+        var output = [];
+        var choices;
+        // for each question...
+        for (var i = 0; i < arr.length; i++) {
+            // reset the list of choices
+            choices = [];
+            // for each choice to each question...
+            for (letter in arr[i].choices) {
+                // adds as radio button
+                choices.push(
+                    '<label>'
+                    + '<input type="radio" name="question' + i + '" value="' + letter + '">'
+                    + arr[i].choices[letter]
+                    + '</label>'
+                );
+            }
+            // adds each question and its choices to the output
+            output.push(
+                '<div class="question">' + arr[i].question + '</div>' + '<br>'
+                + '<div class="choices">' + choices.join('') + '</div>' + '<hr>'
+            );
+
         }
-        document.body.appendChild(document.createElement("br"));
-        console.log(question);
-        console.log(options);
-        console.log(arrQuestions[i].correctAns);
+        // combines output list into one string of html and add to html
+        quiz.innerHTML = output.join('');
+
+    }
+
+    function addResults(arr, quiz, results) {
+
+        // gather answer containers from our quiz
+        var answers = quiz.querySelectorAll('.choices');
+
+        // keep track of user's answers
+        var userChoice = '';
+
+        // for each question...
+        for (var i = 0; i < arr.length; i++) {
+            // find selected answer
+            userChoice = (answers[i].querySelector('input[name=question' + i + ']:checked') || {}).value;
+
+            // if answer is correct
+            if (userChoice === arr[i].correctAns) {
+                // add to the number of correct answers
+                ansCorrect++;
+
+                // color the answers green
+                answers[i].style.color = 'lightgreen';
+            }
+            // if answer is wrong or blank
+            else {
+                // color the answers red
+                answers[i].style.color = 'red';
+                ansUnanswered++;
+            }
+        }
+
+        // show number of correct answers out of total
+        results.createElement = "p";
+        $("p").text('Total Correct: ' + ansCorrect);
+        console.log(results);
+        results.innerHTML = 'Total Incorrect: ' + ansIncorrect;
+        results.innerHTML = 'Total Unanswered: ' + ansUnanswered;
+    }
+
+    addQuestions(array, quizId);
+
+    // on submit, show results
+    submitBtn.onclick = function () {
+        addResults(arr, quizId, resultsId);
     }
 
 }
 
-$(document).ready(function() {
-    var isChecked = $("#input[type=radio]").prop("checked");
-    var counter = 0;
-    if (isChecked === true) {
-        counter +=1;
-        console.log(counter)
-    }
-    
-})
+
+
+// }
+
+// $(document).ready(function () {
+//     var isChecked = $("#input[type=radio]").prop("checked");
+//     var counter = 0;
+//     if (isChecked === true) {
+//         counter += 1;
+//         console.log(counter)
+//     }
+
+// })
 
 
 //  Display Timer
@@ -85,11 +161,12 @@ $(document).ready(function() {
 
 
 //  Track answers
-function countScore() {
+// function countScore() {
 
-}
+// }
 
 
-displayQuiz(arrQuestions);
+
+displayQuiz(arrQuestions, quizId, resultsId, submitBtn);
 
 

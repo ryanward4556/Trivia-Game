@@ -42,43 +42,9 @@ var arrQuestions = [
     }
 ]
 
-// This code will run as soon as the page loads
-$(document).ready(function () {
 
-    //  Variable that will hold our setInterval that runs the stopwatch
-    var intervalId;
 
-    // prevents the clock from being sped up unnecessarily
-    var clockRunning = false;
-    var time = 3;
 
-    function start() {
-        console.log(time);
-        // DONE: Use setInterval to start the count here and set the clock to running.
-        if (!clockRunning) {
-            intervalId = setInterval(count, 1000);
-            clockRunning = true;
-        } 
-    }
-
-    function count() {
-
-        // DONE: increment time by 1, remember we cant use "this" here.
-        time--;
-
-        // DONE: Use the variable we just created to show the converted time in the "display" div.
-        $(timeId).text("Time Remaining: " + time);
-
-        if (time === 0) {
-            clearInterval(intervalId);
-            clockRunning = false;
-
-        }
-
-    }
-    start();
-
-});
 
 //  Shuffles order of array items
 function shuffle(arr) {
@@ -96,83 +62,137 @@ function shuffle(arr) {
 //  Displays questions as text and each question's choices as buttons
 function displayQuiz(arr) {
 
-    //  Randomizes arrQuestions
-    var array = shuffle(arr);
+    // This code will run as soon as the page loads
+    $(document).ready(function () {
 
-    //  Adds questions and choices as html elements
-    function addQuestions(arr, quiz) {
-        var output = [];
-        var choices;
-        // for each question...
-        for (var i = 0; i < arr.length; i++) {
-            // reset the list of choices
-            choices = [];
-            // for each choice to each question...
-            for (letter in arr[i].choices) {
-                // adds as radio button
-                choices.push(
-                    '<label>'
-                    + '<input type="radio" name="question' + i + '" value="' + letter + '">'
-                    + arr[i].choices[letter]
-                    + '</label>'
+        var audio = new Audio("../images/got.mp3");
+        // audio.createSound({
+        //     id: 'mySound',
+        //     url: '/path/to/an.mp3'
+        // });
+
+        // ...and play it
+    //     soundManager.play('mySound');
+    // });
+
+        audio.play();
+
+        //  Variable that will hold our setInterval that runs the stopwatch
+        var intervalId;
+
+        // prevents the clock from being sped up unnecessarily
+        var clockRunning = false;
+        var time = 30;
+
+        function start() {
+            // DONE: Use setInterval to start the count here and set the clock to running.
+            if (!clockRunning) {
+                intervalId = setInterval(count, 1000);
+                clockRunning = true;
+            }
+        }
+
+        function count() {
+
+            // DONE: increment time by 1, remember we cant use "this" here.
+            time--;
+
+            // DONE: Use the variable we just created to show the converted time in the "display" div.
+            $(timeId).text("Time Remaining: " + time);
+            timeIsUp();
+        }
+
+        function timeIsUp() {
+            if (time < 1) {
+                clearInterval(intervalId);
+                clockRunning = false;
+                quizId.setAttribute("style", "display: none;");
+                timeId.setAttribute("style", "display: none;");
+                submitBtn.setAttribute("style", "display: none;");
+                addResults(arr, quizId, resultsId);
+            }
+        }
+
+        start();
+
+
+        //  Randomizes arrQuestions
+        var array = shuffle(arr);
+
+        //  Adds questions and choices as html elements
+        function addQuestions(arr, quiz) {
+            var output = [];
+            var choices;
+            // for each question...
+            for (var i = 0; i < arr.length; i++) {
+                // reset the list of choices
+                choices = [];
+                // for each choice to each question...
+                for (letter in arr[i].choices) {
+                    // adds as radio button
+                    choices.push(
+                        '<label>'
+                        + '<input type="radio" name="question' + i + '" value="' + letter + '">'
+                        + arr[i].choices[letter]
+                        + '</label>'
+                    );
+                }
+                // adds each question and its choices to the output
+                output.push(
+                    '<div class="question">' + arr[i].question + '</div>' + '<br>'
+                    + '<div class="choices">' + choices.join('') + '</div>' + '<hr>'
                 );
+
             }
-            // adds each question and its choices to the output
-            output.push(
-                '<div class="question">' + arr[i].question + '</div>' + '<br>'
-                + '<div class="choices">' + choices.join('') + '</div>' + '<hr>'
-            );
+            // combines output list into one string of html and add to html
+            quiz.innerHTML = output.join('');
 
         }
-        // combines output list into one string of html and add to html
-        quiz.innerHTML = output.join('');
 
-    }
+        function addResults(arr, quiz, results) {
 
-    function addResults(arr, quiz, results) {
+            // gather answer containers from our quiz
+            var answers = quiz.querySelectorAll('.choices');
 
-        // gather answer containers from our quiz
-        var answers = quiz.querySelectorAll('.choices');
+            // keep track of user's answers
+            var userChoice = '';
 
-        // keep track of user's answers
-        var userChoice = '';
+            // for each question...
+            for (var i = 0; i < arr.length; i++) {
+                // find selected answer
+                userChoice = (answers[i].querySelector('input[name=question' + i + ']:checked') || {}).value;
 
-        // for each question...
-        for (var i = 0; i < arr.length; i++) {
-            // find selected answer
-            userChoice = (answers[i].querySelector('input[name=question' + i + ']:checked') || {}).value;
+                // if answer is correct
+                if (userChoice === arr[i].correctAns) {
+                    // add to the number of correct answers
+                    ansCorrect++;
 
-            // if answer is correct
-            if (userChoice === arr[i].correctAns) {
-                // add to the number of correct answers
-                ansCorrect++;
-
-                // color the answers green
-                answers[i].style.color = 'lightgreen';
+                    // color the answers green
+                    answers[i].style.color = 'lightgreen';
+                }
+                // if answer is wrong or blank
+                else {
+                    // color the answers red
+                    answers[i].style.color = 'red';
+                    ansUnanswered++;
+                }
             }
-            // if answer is wrong or blank
-            else {
-                // color the answers red
-                answers[i].style.color = 'red';
-                ansUnanswered++;
-            }
+
+            // show number of correct answers out of total
+            $(results).html("<p>").text('Total Correct: ' + ansCorrect);
+            $(results).append('Total Incorrect: ' + ansIncorrect);
+            $(results).append('Total Unanswered: ' + ansUnanswered);
         }
 
-        // show number of correct answers out of total
-        results.createElement = "p";
-        $("p").text('Total Correct: ' + ansCorrect);
-        console.log(results);
-        results.innerHTML = 'Total Incorrect: ' + ansIncorrect;
-        results.innerHTML = 'Total Unanswered: ' + ansUnanswered;
-    }
+        addQuestions(array, quizId);
 
-    addQuestions(array, quizId);
-
-    // on submit, show results
-    submitBtn.onclick = function () {
-        addResults(arr, quizId, resultsId);
-    }
-
+        // on submit, show results
+        submitBtn.onclick = function () {
+            time = 0;
+            timeIsUp();
+        }
+    });
 }
 displayQuiz(arrQuestions, quizId, resultsId, submitBtn);
+
 

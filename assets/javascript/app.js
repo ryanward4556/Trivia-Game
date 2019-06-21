@@ -43,7 +43,7 @@ var arrQuestions = [
 ]
 
 
-var audio = new Audio("../images/got2.mp3");
+var audio = new Audio("../images/media.io_got2.mp3");
 
 
 

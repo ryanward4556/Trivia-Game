@@ -1,5 +1,8 @@
-STILL WORKING !!!
+(Finished!)
 
-I was having a lot of trouble getting my questions and answers to correctly populate onto the page in order to be counted as correct/incorrect.
 
-I've continued working on it and still am, all that is left is to sort out the logic behind counting correct/incorrect answers, adding the timer, and then CSS adjustments
+This app will test your knowledge of Game of Thrones TV Series (If you haven't seen the show yet...Spoiler Alert! You have been warned).
+
+This Trivia Game uses HTML, CSS, JavaScript and jQuery. I used JavaScript where I could've used jQuery in some cases because in the last hw we had to use jQuery and I wanted to try to utilize Javascript methods to practice using them. 
+
+The game is simple, you choose your answers and it will tell you how many you've answer correctly, incorrectly, and how many you've left unanswered...this all happens once you press the start button, upon which your 60 seconds to finish the quiz begins. Once you hit Submit or your time runs out, your results will display

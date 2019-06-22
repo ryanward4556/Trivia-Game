@@ -105,31 +105,19 @@ var arrQuestions = [
 
 ]
 
-// $('#play').click(function () {
-//     var audio = {};
-//     audio["walk"] = new Audio();
-//     audio["walk"].src = "../images/media.io_got2.mp3"
-//     audio["walk"].addEventListener('load', function () {
-//         audio["walk"].play();
-//     });
-// });
-
+//  Plays audio function on submit click, linked in html
 function play() {
     var audio = document.getElementById("audio");
     audio.play();
 }
 
-// var audio = new Audio("./images/media.io_got2.mp3");
-
+//  Calls hide sumbit to not show on starting screen
 hideSubmitBtn();
 
 //  When Start Button is clicked, run display quiz and hide the start button
 $("#start-button").on("click", function () {
     hideStartBtn();
     displayQuiz(arrQuestions, quizId, resultsId, submitBtn);
-
-    //  Plays audio file
-    // audio.play();
 });
 
 //  Shuffles order of array items
@@ -145,6 +133,7 @@ function shuffle(arr) {
     return arr;
 }
 
+//  Hides each button when called
 function hideStartBtn() {
     startBtn.setAttribute("style", "display: none;");
 }
@@ -167,6 +156,7 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
     var clockRunning = false;
     var time = 60;
 
+    //  Starts timer
     function start() {
         $(timeId).text("Time Remaining: " + time);
 
@@ -188,6 +178,7 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
         timeIsUp();
     }
 
+    //  When time is less than 1, clearInterval, hid quiz, time and submit button and show results
     function timeIsUp() {
         if (time < 1) {
             clearInterval(intervalId);

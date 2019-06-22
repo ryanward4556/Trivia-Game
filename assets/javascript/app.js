@@ -154,7 +154,7 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
 
     // Prevents the clock from being sped up unnecessarily
     var clockRunning = false;
-    var time = 60;
+    var time = 120;
 
     //  Starts timer
     function start() {

@@ -24,7 +24,11 @@
     <!-- style.css -->
     <link rel="stylesheet" href="assets/css/style.css">
 
+    <!-- Google font - Merienda -->
+    <link href="https://fonts.googleapis.com/css?family=Merienda&display=swap" rel="stylesheet">
+
     <title>Game of Thrones Trivia Game</title>
+
 </head>
 
 <body>
@@ -32,6 +36,12 @@
     <div class="container mt-4 p-3">
         <div class="jumbotron text-center" id="title-display">
             <h1 class="display-4">Game of Thrones Trivia Game</h1>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <button id="start-button" onclick="play()">Start Game</button>
+                <audio id="audio" src="assets/images/media.io_got2.mp3" ></audio>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-12 text-center" id="time-display"></div>

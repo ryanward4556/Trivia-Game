@@ -1,3 +1,33 @@
 body {
-    background: gray;
+    background-image: url("../images/got-background.jpg");
+    background-size: 100%;
+    font-family: 'Merienda', cursive;
+}
+
+.row {
+    color: white;
+}
+
+.jumbotron {
+    background-color: #75f8fb;
+}
+
+.question {
+    font-size: 24px;
+}
+
+#time-display {
+    font-size: 36px;
+}
+
+#start-button {
+    justify-content: center;
+}
+
+#results-display {
+    font-size: 36px;
+}
+
+#start-button {
+    font-size: 42px;
 }

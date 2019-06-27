@@ -1,4 +1,4 @@
-## Trivia Game Description
+## Game of Thrones Trivia Game Description
 
 This app will test your knowledge of Game of Thrones TV Series (If you haven't seen the show yet...Spoiler Alert!-You have been warned).
 

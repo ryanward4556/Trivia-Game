@@ -208,7 +208,7 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
                 // adds as radio button
                 choices.push(
                     '<label>'
-                    + '<input type="radio" name="question' + i + '" value=" ' + letter + '">'
+                    + '<input type="radio" name="question' + i + '" value="' + letter + '">'
                     + ' '
                     + arr[i].choices[letter]
                     + '</label>'
@@ -234,14 +234,14 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
         var userChoice = '';
         for (var i = 0; i < arr.length; i++) {
             // Finds selected answer
-            userChoice = (answers[i].querySelector('input[name=question' + i + ']:checked') || {}).value;
+            userChoice = (answers[i].querySelector('input[name=question' + i + ']:checked').value || {});
 
             // If answer is correct
             if (userChoice === arr[i].correctAns) {
                 ansCorrect++;
 
                 //  If answer is incorrect
-            } else if (answers[i].querySelector('input[type=radio]:checked') && userChoice != arr[i].correctAns) {
+            } else if (userChoice != arr[i].correctAns) {
                 ansIncorrect++;
             }
 
@@ -250,6 +250,7 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
                 ansUnanswered++;
             }
         }
+        console.log(userChoices);
 
         // Displays number of correct answers out of total
         $(results).html("<p>").text('Total Correct: ' + ansCorrect + "   ");

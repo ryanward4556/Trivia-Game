@@ -232,9 +232,11 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
         var answers = quiz.querySelectorAll('.choices');
 
         var userChoice = '';
+        // var userChoices = [];
         for (var i = 0; i < arr.length; i++) {
             // Finds selected answer
-            userChoice = (answers[i].querySelector('input[name=question' + i + ']:checked').value || {});
+            userChoice = (answers[i].querySelector('input[name=question' + i + ']:checked') || {}).value;
+            // userChoices.push(userChoice);
 
             // If answer is correct
             if (userChoice === arr[i].correctAns) {
@@ -250,7 +252,7 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
                 ansUnanswered++;
             }
         }
-        console.log(userChoices);
+        // console.log(userChoices);
 
         // Displays number of correct answers out of total
         $(results).html("<p>").text('Total Correct: ' + ansCorrect + "   ");

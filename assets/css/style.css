@@ -1,5 +1,7 @@
 body {
     background-image: url("../images/got-background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: 100%;
     font-family: 'Merienda', cursive;
 }

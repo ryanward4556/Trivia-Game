@@ -9,6 +9,7 @@ var resultsId = document.getElementById("results-display");
 var submitBtn = document.getElementById("submit-button");
 var startBtn = document.getElementById("start-button");
 var submitBtn = document.getElementById("submit-button");
+var restartBtn = document.getElementById("restart-button");
 
 //  Object array for each question
 var arrQuestions = [
@@ -113,6 +114,7 @@ function play() {
 
 //  Calls hide sumbit to not show on starting screen
 hideSubmitBtn();
+hideRestartBtn();
 
 //  When Start Button is clicked, run display quiz and hide the start button
 $("#start-button").on("click", function () {
@@ -140,14 +142,14 @@ function hideStartBtn() {
 function hideSubmitBtn() {
     submitBtn.setAttribute("style", "display: none;");
 }
-
+function hideRestartBtn() {
+    restartBtn.setAttribute("style", "display: none;");
+}
 
 //  Displays questions as text and each question's choices as buttons
 function displayQuiz(arr, quizId, resultsId, submitBtn) {
 
-
     submitBtn.setAttribute("style", "display: auto;");
-
 
     //  Variable that will hold our setInterval that runs the stopwatch
     var intervalId;
@@ -230,13 +232,11 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
 
         // Gathers answer containers from  quiz
         var answers = quiz.querySelectorAll('.choices');
-
         var userChoice = '';
-        // var userChoices = [];
+
         for (var i = 0; i < arr.length; i++) {
             // Finds selected answer
             userChoice = (answers[i].querySelector('input[name=question' + i + ']:checked') || {}).value;
-            // userChoices.push(userChoice);
 
             // If answer is correct
             if (userChoice === arr[i].correctAns) {
@@ -252,12 +252,13 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
                 ansUnanswered++;
             }
         }
-        // console.log(userChoices);
 
         // Displays number of correct answers out of total
         $(results).html("<p>").text('Total Correct: ' + ansCorrect + "   ");
         $(results).append('Total Incorrect: ' + ansIncorrect + "   ");
         $(results).append('Total Unanswered: ' + ansUnanswered);
+        restartGame();
+
     }
 
     addQuestions(array, quizId);
@@ -269,6 +270,12 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
     }
     // });
 }
+
+function restartGame() {
+    restartBtn.setAttribute("style", "display: auto;");
+
+}
+
 
 
 

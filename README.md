@@ -8,7 +8,7 @@ The game is simple, you choose your answers and it will tell you how many you've
 
 ## Deployed Site
 
-[https://ryanward4556.github.io/TriviaGame/](https://ryanward4556.github.io/TriviaGame/)
+[GOT Trivia Game](https://ryanward4556.github.io/Trivia-Game/)
 
 ## Built With
 

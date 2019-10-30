@@ -256,7 +256,7 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
         // Displays number of correct answers out of total
         $(results).html("<p>").text('Total Correct: ' + ansCorrect + "   ");
         $(results).append('Total Incorrect: ' + ansIncorrect + "   ");
-        $(results).append('Total Unanswered: ' + ansUnanswered);
+        // $(results).append('Total Unanswered: ' + ansUnanswered);
         restartGame();
 
     }
@@ -273,7 +273,9 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
 
 function restartGame() {
     restartBtn.setAttribute("style", "display: auto;");
-
+    restartBtn.onclick = function () {
+        window.open("https://ryanward4556.github.io/Trivia-Game");
+    }
 }
 
 

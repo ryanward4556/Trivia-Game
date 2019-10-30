@@ -273,9 +273,6 @@ function displayQuiz(arr, quizId, resultsId, submitBtn) {
 
 function restartGame() {
     restartBtn.setAttribute("style", "display: auto;");
-    restartBtn.onclick = function () {
-        window.open("https://ryanward4556.github.io/Trivia-Game");
-    }
 }
 
 
